@@ -1,9 +1,14 @@
 ## Mohsen Pourdehghan
 
-bread_dict = {'Barbari' : 5000, 'Lavash' : 8000, 'Taftoon' : 15000, 'Sangak' : 10000, 'Baguette' : 20000}
+import datetime
+
+bread_dict = {'Barbari' : 500, 'Lavash' : 800, 'Taftoon' : 1500, 'Sangak' : 1000, 'Baguette' : 2000}
 cart_dict ={}
 
+
 customer_name = input('\nHello there, whats your name? ')
+
+
 
 #--- Valid name without number ---
 x=1 #runs the while loop for once
@@ -18,6 +23,9 @@ while x > 0 :
         x = 0
 ###
 
+
+
+
 #--- Valid number ---     
 ph_number = input('\nplease tell your mobile phone(with 11 digits and just numbers): ')
 
@@ -25,7 +33,13 @@ while (ph_number.isdigit() == False) or (len(ph_number) < 11 or len(ph_number) >
     ph_number = input('Invalid Number!!! tell your mobile phone(with 11 digits and just numbers): ')
 ###
     
+
+
+
 print('\n',bread_dict)
+
+
+
 
 need_more = 'yes'
 
@@ -39,8 +53,11 @@ while need_more == 'yes' :
 
     ###
 
+
+
     bread_amount = input(f'\nOK, How many from it? (from 1 to 10) ')
     
+
     #--- Check the input ---
     while bread_amount.isdigit() == False or int(bread_amount) > 10: #for checking the last input from the second while in this loop
         
@@ -51,12 +68,18 @@ while need_more == 'yes' :
             bread_amount = input(f'\nYOU CANT BUY OVER 10!!! How many from it? ')
     ###
 
+
+
+
     if bread_type in cart_dict :
         cart_dict[bread_type][0] += int(bread_amount)
         cart_dict[bread_type][1] += int(bread_amount) * bread_dict[bread_type]
     else:
         cart_dict[bread_type] = [int(bread_amount), int(bread_amount) * bread_dict[bread_type]]
     
+
+
+
     #--- Need More? ---
     need_more = input('\nOK, Do you need other types? (yes/no) ')
     while need_more !='no' and need_more != 'yes' :
@@ -64,18 +87,38 @@ while need_more == 'yes' :
     ###
 
       
-if need_more == 'no':
-    #--- Sum of prices ---
-    pay = 0
-    for breadTypes in cart_dict:
-            pay += cart_dict[breadTypes][1]
-        
-    print(f'''\nThere you go, you bought this breads with their [amount, price]:=>
+
+#--- Sum of prices ---
+pay = 0
+for breadTypes in cart_dict:
+        pay += cart_dict[breadTypes][1]
+    
+print(f'''\nThere you go, you bought this breads with their [amount, price]:=>
 
 {cart_dict}
 
 => you have to pay {pay}.
 
 ''')
-    ###
+###
     
+
+
+
+#--- Save to file ---
+
+file = open('Bakery/bakery_result.txt', 'a')
+
+file.write(f'''
+
+==== order for "{customer_name}" at {datetime.datetime.now()} ====
+
+- phone number: {ph_number}
+
+- cart items: {cart_dict}
+
+- total pay: {pay}
+
+            ''')
+
+file.close()
